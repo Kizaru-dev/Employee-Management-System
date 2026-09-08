@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management System </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+<div class="container mt-4">
+    <h1 class="text-white text-center mt-4">Employee Management System</h1>
+    <div class="mt-4">
+        <a th:href="@{/employees/addPage}"
+            class="btn btn-primary btn-md">Add Employee</a>
+    </div>
+    <div >
+        <table class="table table-bordered table-striped table-hover mt-4">
+            <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>PhoneNo</th>
+                <th>DateOfBirth</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>JobTitle</th>
+                <th>Salary</th>
+                <th>JoiningDate</th>
+                <th>EmployeeStatus</th>
+                <th>Address</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${firstName}"></td>
+                <td th:text="${lastName}"></td>
+                <td th:text="${email}"></td>
+                <td th:text="${phoneNo}"></td>
+                <td th:text="${dateOfBirth}"></td>
+                <td th:text="${gender}"></td>
+                <td th:text="${department}"></td>
+                <td th:text="${jobTitle}"></td>
+                <td th:text="${salary}"></td>
+                <td th:text="${joiningDate}"></td>
+                <td th:text="${employeeStatus}"></td>
+                <td th:text="${address}"></td>
+                <td th:text="${createdAt}"></td>
+                <td th:text="${updatedAt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
