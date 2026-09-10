@@ -9,12 +9,29 @@
 <body class="bg-dark">
 <div class="container mt-4">
     <h1 class="text-white text-center mt-4">Employee Management System</h1>
+    <div>
+        <form th:action="@{/employees/search}" method="get" class="row g-2 mb-4">
+            <div class="col-md-8 mt-4">
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Enter name to Find Employee">
+            </div>
+            <div class="col-md-2 mt-4">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+            <div class="col-md-2 mt-4">
+                <a th:href="@{/employee}" class="btn btn-danger w-100">Clear</a>
+            </div>
+        </form>
+        <div th:if="${searched and #lists.isEmpty(employees)}" class="alert alert-warning w-100">
+            No Employee Found
+        </div>
+    </div>
     <div class="mt-4">
         <a th:href="@{/employees/addPage}"
             class="btn btn-primary btn-md">Add Employee</a>
     </div>
-    <div >
-        <table class="table table-bordered table-striped table-hover mt-4">
+    <div class="text-center ">
+        <table class="table table-bordered table-striped table-hover mt-4"
+                th:unless="${#lists.isEmpty(employees)}">
             <thead>
             <tr>
                 <th>FirstName</th>
@@ -31,24 +48,32 @@
                 <th>Address</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="employee : ${employees}">
-                <td th:text="${firstName}"></td>
-                <td th:text="${lastName}"></td>
-                <td th:text="${email}"></td>
-                <td th:text="${phoneNo}"></td>
-                <td th:text="${dateOfBirth}"></td>
-                <td th:text="${gender}"></td>
-                <td th:text="${department}"></td>
-                <td th:text="${jobTitle}"></td>
-                <td th:text="${salary}"></td>
-                <td th:text="${joiningDate}"></td>
-                <td th:text="${employeeStatus}"></td>
-                <td th:text="${address}"></td>
-                <td th:text="${createdAt}"></td>
-                <td th:text="${updatedAt}"></td>
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.email}"></td>
+                <td th:text="${employee.phoneNo}"></td>
+                <td th:text="${employee.dateOfBirth}"></td>
+                <td th:text="${employee.gender}"></td>
+                <td th:text="${employee.department}"></td>
+                <td th:text="${employee.jobTitle}"></td>
+                <td th:text="${employee.salary}"></td>
+                <td th:text="${employee.joiningDate}"></td>
+                <td th:text="${employee.employeeStatus}"></td>
+                <td th:text="${employee.address}"></td>
+                <td th:text="${employee.createdAt}"></td>
+                <td th:text="${employee.updatedAt}"></td>
+                <td>
+                    <a th:href="@{/employees/update/{id} (id=${employee.id})}" class="btn btn-warning btn-sm ">Update</a>
+                </td>
+                <td>
+                    <a th:href="@{/employees/delete/{id} (id=${employee.id})}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
             </tr>
             </tbody>
         </table>

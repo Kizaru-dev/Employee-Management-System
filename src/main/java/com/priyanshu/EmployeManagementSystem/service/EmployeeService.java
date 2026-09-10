@@ -48,5 +48,12 @@ public class EmployeeService {
         employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid Exception"));
         employeeRepository.deleteById(id);
     }
+
+    public List<Employee> searchEmployee(String keyword){
+        if(keyword == null || keyword.trim().isEmpty()){
+            return employeeRepository.findAll();
+        }
+        return employeeRepository.findByFirstNameContainingIgnoreCase(keyword);
+    }
 }
 

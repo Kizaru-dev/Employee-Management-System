@@ -6,19 +6,26 @@ import com.priyanshu.EmployeManagementSystem.entity.Gender;
 import com.priyanshu.EmployeManagementSystem.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RestController("/employees")
+@RequestMapping("/employees")
 public class EmployeeController {
 
     private final EmployeeService  employeeService ;
 
     public EmployeeController(EmployeeService employeeService){
         this.employeeService = employeeService ;
+    }
+
+    @GetMapping("/search")
+    public String searchFeature(@RequestParam(required = false) String keyword , Model model){
+        model.addAttribute("employees",employeeService.searchEmployee(keyword));
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("searched",true);
+        return "home";
     }
 
     //Home Page.
@@ -37,6 +44,33 @@ public class EmployeeController {
         model.addAttribute("employeeStatuses", EmployeeStatus.values());
         model.addAttribute("genders", Gender.values());
         return "add";
+    }
+
+    @PostMapping("/employee")
+    public String addEmployee(@ModelAttribute Employee employee){
+        employeeService.saveEmployee(employee);
+        return "redirect:/employees";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updatePageRender(Model model , @PathVariable Long id){
+        Employee employeeById = employeeService.getEmployeeById(id);
+        model.addAttribute("employee",employeeById);
+        model.addAttribute("genders",Gender.values());
+        model.addAttribute("employeeStatus",EmployeeStatus.values());
+        return "update";
+    }
+
+    @PostMapping("/updated/{id}")
+    public String updateEmployee(@ModelAttribute Employee employee , @PathVariable Long id){
+        employeeService.updateEmployee(employee,id);
+        return "redirect:/employee";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteEmployee(@PathVariable Long id){
+        employeeService.deleteById(id);
+        return "redirect:/employee";
     }
 
 }

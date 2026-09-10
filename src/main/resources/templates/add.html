@@ -9,7 +9,7 @@
 <body class="bg-dark">
 <div class="container mt-4">
     <div class="card shadow card-body">
-        <form th:action="@{/employees/add}" th:object="${employee}" method="post">
+        <form th:action="@{/employees/employee}" th:object="${employee}" method="post">
             <div class="mt-4">
                 <label class="form-label">FirstName</label>
                 <input type="text" class="form-control" placeholder="Enter Your Name" th:field="*{firstName}" required>
@@ -58,9 +58,9 @@
             </div>
             <div class="mt-4">
                 <label class="form-label">Employee Status</label>
-                <select  id="employeeStatus" class="form-select" th:field="*{employeeStatus}" required>
+                <select  id="employeeStatuses" class="form-select" th:field="*{employeeStatus}" required>
                     <option value="">Select employee Status</option>
-                    <option th:each="status : ${employeeStatus}"
+                    <option th:each="status : ${employeeStatuses}"
                             th:value="${status}" th:text="${status}"></option>
                 </select>
             </div>
