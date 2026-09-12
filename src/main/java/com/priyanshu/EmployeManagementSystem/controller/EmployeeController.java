@@ -4,9 +4,12 @@ import com.priyanshu.EmployeManagementSystem.entity.Employee;
 import com.priyanshu.EmployeManagementSystem.entity.EmployeeStatus;
 import com.priyanshu.EmployeManagementSystem.entity.Gender;
 import com.priyanshu.EmployeManagementSystem.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.model.IModel;
 
 import java.util.List;
 
@@ -47,7 +50,17 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee")
-    public String addEmployee(@ModelAttribute Employee employee){
+    public String addEmployee(@Valid @ModelAttribute Employee employee , BindingResult bindingResult,
+                              Model model){
+
+        if(bindingResult.hasErrors()){
+            System.out.println("Has Errors : " + bindingResult.hasErrors());
+            System.out.println(bindingResult.getAllErrors());
+            model.addAttribute("employeeStatuses",EmployeeStatus.values());
+            model.addAttribute("genders",Gender.values());
+            return "add";
+        }
+
         employeeService.saveEmployee(employee);
         return "redirect:/employees";
     }

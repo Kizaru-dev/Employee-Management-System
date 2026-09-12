@@ -9,64 +9,156 @@
 <body class="bg-dark">
 <div class="container mt-4">
     <div class="card shadow card-body">
-        <form th:action="@{/employees/employee}" th:object="${employee}" method="post">
+        <form th:action="@{/employees/employee}" th:object="${employee}" method="post" novalidate>
             <div class="mt-4">
                 <label class="form-label">FirstName</label>
-                <input type="text" class="form-control" placeholder="Enter Your Name" th:field="*{firstName}" required>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Your Name"
+                        th:field="*{firstName}"
+                        th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''"
+                        required>
+                <div
+                        class="invalid-feedback"
+                        th:errors="*{firstName}"
+                >
+                </div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter Your LastName" th:field="*{lastName}" required>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Your LastName"
+                        th:field="*{lastName}"
+                        th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''"
+                        required>
+                <div
+                        class="invalid-feedback"
+                        th:errors="*{lastName}"
+                >
+                </div>
             </div>
+
             <div class="mt-4">
                 <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Enter Your Email Address" th:field="*{email}" required>
+                <input
+                        type="email"
+                        class="form-control"
+                       placeholder="Enter Your Email Address"
+                       th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                       required>
+                <div class="invalid-feedback" th:errors="*{email}"></div>
             </div>
+
             <div class="mt-4">
                 <label class="form-label">Phone NO</label>
-                <input type="tel" class="form-control" placeholder="Enter Your Phone No." th:field="*{phoneNo}" required>
+                <input
+                        type="tel"
+                        class="form-control"
+                        placeholder="Enter Your Phone No."
+                        th:field="*{phoneNo}"
+                        th:classappend="${#fields.hasErrors('phoneNo')} ? 'is-invalid' : ''"
+                        required>
+                <div class="invalid-feedback" th:errors="*{phoneNo}"></div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Date Of Birth</label>
-                <input type="date" class="form-control" placeholder="Enter Your Birth Date" th:field="*{dateOfBirth}" required>
+                <input
+                        type="date"
+                        class="form-control"
+                        placeholder="Enter Your Birth Date"
+                        th:field="*{dateOfBirth}"
+                        th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid' : ''"
+                        required>
+                <div class="invalid-feedback" th:errors="*{dateOfBirth}"></div>
             </div>
 
             <div class="mt-4">
                 <label class="form-label">Gender</label>
-                <select name="" id="gender" class="form-select" th:field="*{gender}" required>
+                <select
+                        name=""
+                        id="gender"
+                        class="form-select"
+                        th:field="*{gender}"
+                        th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid' : ''"
+                        required>
                     <option value="">Select gender</option>
                     <option th:each="gender : ${genders}"
                             th:value="${gender}" th:text="${gender}"></option>
                 </select>
+                <div class="invalid-feedback" th:errors="*{gender}"></div>
             </div>
 
             <div class="mt-4">
                 <label class="form-label">Department</label>
-                <input type="text" class="form-control" placeholder="Enter your Department Name : " th:field="*{department}" required>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your Department Name : "
+                        th:field="*{department}"
+                        th:classappend="${#fields.hasErrors('department')} ? 'is-invalid' : ''"
+                        required>
+                <div class="invalid-feedback" th:errors="*{department}"></div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Job Title</label>
-                <input type="text" class="form-control" placeholder="Enter Your Job Title" th:field="*{jobTitle}" required>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Your Job Title"
+                        th:field="*{jobTitle}"
+                        th:classappend="${#fields.hasErrors('jobTitle')} ? 'is-invalid' :  ''"
+                        required>
             </div>
             <div class="mt-4">
                 <label class="form-label">Salary</label>
-                <input type="number" class="form-control" placeholder="Enter Your Salary" th:field="*{salary}" required >
+                <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Enter Your Salary"
+                        th:field="*{salary}"
+                        th:classappend="${#fields.hasErrors('salary') ? 'is-invalid' : ''}"
+                        required >
+                <div class="invalid-feedback" th:errors="*{salary}"></div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Joining Date</label>
-                <input type="date" class="form-control" placeholder="Enter Date of Joining" th:field="*{joiningDate}" required >
+                <input
+                        type="date"
+                        class="form-control"
+                        placeholder="Enter Date of Joining"
+                        th:field="*{joiningDate}"
+                        th:classappend="${#fields.hasErrors('joiningDate')} ? 'is-invalid' : ''"
+                        required >
+                <div class="invalid-feedback" th:errors="*{joiningDate}"></div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Employee Status</label>
-                <select  id="employeeStatuses" class="form-select" th:field="*{employeeStatus}" required>
+                <select
+                        id="employeeStatuses"
+                        class="form-select"
+                        th:field="*{employeeStatus}"
+                        th:classappend="${#fields.hasErrors('employeeStatus')} ? 'is-invalid' : ''"
+                        required>
                     <option value="">Select employee Status</option>
                     <option th:each="status : ${employeeStatuses}"
                             th:value="${status}" th:text="${status}"></option>
                 </select>
+                <div class="invalid-feedback" th:errors="*{employeeStatus}"></div>
             </div>
             <div class="mt-4">
                 <label class="form-label">Address</label>
-                <input type="text" class="form-control" placeholder="Enter your address here" th:field="*{address}" required>
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your address here"
+                        th:classappend="${#fields.hasErrors('address')} ? 'is-invalid' : ''"
+                        th:field="*{address}"
+                        required>
+                <div class="invalid-feedback" th:error="*{address}"></div>
             </div>
             <div class="mt-4">
                 <button class="btn btn-primary btn-md me-2" type="submit">Add Employee</button>
