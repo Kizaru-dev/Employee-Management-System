@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.model.IModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -44,8 +45,6 @@ public class EmployeeController {
     @GetMapping("/addPage")
     public String addPage(Model model){
         model.addAttribute("employee",new Employee());
-        model.addAttribute("employeeStatuses", EmployeeStatus.values());
-        model.addAttribute("genders", Gender.values());
         return "add";
     }
 
@@ -53,24 +52,53 @@ public class EmployeeController {
     public String addEmployee(@Valid @ModelAttribute Employee employee , BindingResult bindingResult,
                               Model model){
 
+        LocalDate birthDate = employee.getDateOfBirth();
+        LocalDate joiningDate = employee.getJoiningDate();
+
+        if(!bindingResult.hasFieldErrors("email")
+                &&  employeeService.emailExists(employee.getEmail())){
+            bindingResult.rejectValue(
+                    "email",
+                    "email.duplicates",
+                    "Employee with this email already exists"
+            );
+        }
+        if(employee.getJoiningDate() != null && employee.getDateOfBirth() != null){
+
+            if(employee.getJoiningDate().isAfter(birthDate)){
+                bindingResult.reject(
+                        "employee.invalidDate",
+                        "Joining Date Must not be after date of Birth"
+                );
+            }
+            else if(joiningDate.isBefore(birthDate.plusYears(18))){
+                bindingResult.reject(
+                        "employee.minimumAge",
+                        "Employee must be at least 18 old on the joining date"
+                );
+            }
+
+        }
         if(bindingResult.hasErrors()){
-            System.out.println("Has Errors : " + bindingResult.hasErrors());
-            System.out.println(bindingResult.getAllErrors());
-            model.addAttribute("employeeStatuses",EmployeeStatus.values());
-            model.addAttribute("genders",Gender.values());
             return "add";
         }
-
         employeeService.saveEmployee(employee);
         return "redirect:/employees";
+    }
+    @ModelAttribute("genders")
+    public Gender[] providesGender(){
+        return Gender.values();
+    }
+
+    @ModelAttribute("employeeStatus")
+    public EmployeeStatus[] provideEmployeeStatus(){
+        return EmployeeStatus.values();
     }
 
     @GetMapping("/update/{id}")
     public String updatePageRender(Model model , @PathVariable Long id){
         Employee employeeById = employeeService.getEmployeeById(id);
         model.addAttribute("employee",employeeById);
-        model.addAttribute("genders",Gender.values());
-        model.addAttribute("employeeStatus",EmployeeStatus.values());
         return "update";
     }
 
@@ -85,5 +113,7 @@ public class EmployeeController {
         employeeService.deleteById(id);
         return "redirect:/employee";
     }
+
+
 
 }

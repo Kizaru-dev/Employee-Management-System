@@ -10,6 +10,15 @@
 <div class="container mt-4">
     <div class="card shadow card-body">
         <form th:action="@{/employees/employee}" th:object="${employee}" method="post" novalidate>
+            <div class="alert alert-warning"
+                    th:if="${#fields.hasGlobalErrors()}">
+                    <ul class="mb-0">
+                        <li th:each="error : ${#fields.globalErrors()}"
+                            th:text="${error}">
+                        </li>
+                    </ul>
+            </div>
+
             <div class="mt-4">
                 <label class="form-label">FirstName</label>
                 <input

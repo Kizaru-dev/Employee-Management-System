@@ -55,5 +55,9 @@ public class EmployeeService {
         }
         return employeeRepository.findByFirstNameContainingIgnoreCase(keyword);
     }
+
+    public boolean emailExists(String email){
+        return employeeRepository.existsByEmailIgnoreCase(email);
+    }
 }
 
