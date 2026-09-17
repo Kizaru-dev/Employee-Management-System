@@ -73,7 +73,6 @@ public class EmployeeController {
             }
             else if(joiningDate.isBefore(birthDate.plusYears(18))){
                 bindingResult.reject(
-                        "employee.minimumAge",
                         "Employee must be at least 18 old on the joining date"
                 );
             }
