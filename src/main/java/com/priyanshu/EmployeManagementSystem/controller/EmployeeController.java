@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.model.IModel;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -50,7 +50,7 @@ public class EmployeeController {
 
     @PostMapping("/employee")
     public String addEmployee(@Valid @ModelAttribute Employee employee , BindingResult bindingResult,
-                              Model model){
+                              Model model , RedirectAttributes redirectAttributes){
 
         LocalDate birthDate = employee.getDateOfBirth();
         LocalDate joiningDate = employee.getJoiningDate();
@@ -65,10 +65,10 @@ public class EmployeeController {
         }
         if(employee.getJoiningDate() != null && employee.getDateOfBirth() != null){
 
-            if(employee.getJoiningDate().isAfter(birthDate)){
+            if(!employee.getJoiningDate().isAfter(birthDate)){
                 bindingResult.reject(
                         "employee.invalidDate",
-                        "Joining Date Must not be after date of Birth"
+                        "Joining date must be after the date of birth"
                 );
             }
             else if(joiningDate.isBefore(birthDate.plusYears(18))){
@@ -83,8 +83,13 @@ public class EmployeeController {
             return "add";
         }
         employeeService.saveEmployee(employee);
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Employee has been added"
+        );
         return "redirect:/employees";
     }
+
     @ModelAttribute("genders")
     public Gender[] providesGender(){
         return Gender.values();

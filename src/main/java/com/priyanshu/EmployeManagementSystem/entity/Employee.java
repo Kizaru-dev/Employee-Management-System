@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,6 +39,7 @@ public class Employee {
     )
     private String phoneNo ;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @NotNull(message = "Date should not be Empty")
     @Past(message = "date of birth should be in past")
     private LocalDate dateOfBirth;
@@ -62,6 +64,7 @@ public class Employee {
     )
     private BigDecimal salary ;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @PastOrPresent(message = "Joining Dates should not be in Future")
     @NotNull(message = "Joining Date  should not be empty")
     private LocalDate joiningDate ;

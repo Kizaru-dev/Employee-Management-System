@@ -9,6 +9,11 @@
 <body class="bg-dark">
 <div class="container mt-4">
     <h1 class="text-white text-center mt-4">Employee Management System</h1>
+    <div   class="alert alert-success"
+            role="alert"
+            th:if="${successMessage}">
+        <span th:text="${successMessage}"></span>
+    </div>
     <div>
         <form th:action="@{/employees/search}" method="get" class="row g-2 mb-4" >
             <div class="col-md-8 mt-4">
@@ -58,12 +63,22 @@
                 <td th:text="${employee.lastName}"></td>
                 <td th:text="${employee.email}"></td>
                 <td th:text="${employee.phoneNo}"></td>
-                <td th:text="${employee.dateOfBirth}"></td>
+
+                <td
+                    th:text="${#temporals.format(
+                    employee.dateOfBirth,
+                    'dd MM yyyy')}"></td>
+
                 <td th:text="${employee.gender}"></td>
                 <td th:text="${employee.department}"></td>
                 <td th:text="${employee.jobTitle}"></td>
                 <td th:text="${employee.salary}"></td>
-                <td th:text="${employee.joiningDate}"></td>
+
+                <td
+                    th:text="${#temporals.format(
+                    employee.joiningDate,
+                    'dd,MM,yyyy')}"></td>
+
                 <td th:text="${employee.employeeStatus}"></td>
                 <td th:text="${employee.address}"></td>
                 <td th:text="${employee.createdAt}"></td>

@@ -147,13 +147,13 @@
             <div class="mt-4">
                 <label class="form-label">Employee Status</label>
                 <select
-                        id="employeeStatuses"
+                        id="employeeStatus"
                         class="form-select"
                         th:field="*{employeeStatus}"
                         th:classappend="${#fields.hasErrors('employeeStatus')} ? 'is-invalid' : ''"
                         required>
                     <option value="">Select employee Status</option>
-                    <option th:each="status : ${employeeStatuses}"
+                    <option th:each="status : ${employeeStatus}"
                             th:value="${status}" th:text="${status}"></option>
                 </select>
                 <div class="invalid-feedback" th:errors="*{employeeStatus}"></div>

@@ -1,6 +1,7 @@
 package com.priyanshu.EmployeManagementSystem.service;
 
 import com.priyanshu.EmployeManagementSystem.entity.Employee;
+import com.priyanshu.EmployeManagementSystem.exception.EmployeeNotFoundException;
 import com.priyanshu.EmployeManagementSystem.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(Long id){
-        return employeeRepository.findById(id).orElseThrow(()-> new RuntimeException("Invalid Id."));
+        return employeeRepository.findById(id).orElseThrow(()-> new EmployeeNotFoundException("Invalid Id."));
     }
 
     public Employee saveEmployee(Employee employee){
@@ -45,7 +46,7 @@ public class EmployeeService {
     }
 
     public void deleteById(Long id){
-        employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid Exception"));
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee " + id + "Not Found .. "));
         employeeRepository.deleteById(id);
     }
 
