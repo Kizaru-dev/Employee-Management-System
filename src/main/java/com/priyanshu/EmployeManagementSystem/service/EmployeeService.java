@@ -50,7 +50,12 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-
+    public List<Employee> searchEmployee(String keyword){
+        if(keyword == null || keyword.trim().isEmpty()){
+            return employeeRepository.findAll();
+        }
+        return employeeRepository.findByFirstNameContainingIgnoreCase(keyword);
+    }
 
     public boolean emailExists(String email){
         return employeeRepository.existsByEmailIgnoreCase(email);
