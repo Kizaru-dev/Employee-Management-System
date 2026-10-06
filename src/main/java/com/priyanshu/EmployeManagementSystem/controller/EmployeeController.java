@@ -113,10 +113,10 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable Long id){
         employeeService.deleteById(id);
-        return "redirect:/employee";
+        return "redirect:/employees";
     }
 
 
